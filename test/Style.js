@@ -89,3 +89,50 @@ describe('Style', () => {
   })
 
 })
+
+describe('Mutation', () => {
+
+  it('supports adding rulesets through a .set() method', () => {
+    const st = Style({ 'body': { 'color': '#222' } })
+    deepEqual(
+      st.rulesets(),
+      { 'body': { 'color': '#222' } }
+    )
+
+    st.set('.warning', { 'color': '#f00' })
+
+    deepEqual(
+      st.rulesets(),
+      { 'body': { 'color': '#222' }
+      , '.warning': { 'color': '#f00' } }
+    )
+  })
+
+  it('merges rulesets in the .set() method', () => {
+    const st = Style({ 'body': { 'color': '#222' } })
+    st.set('body', { 'background': '#f0f' })
+
+    deepEqual(
+      st.rulesets(),
+      { 'body': { 'color': '#222'
+                , 'background': '#f0f' } }
+    )
+  })
+
+  it('overrides duplicate properties in the .set() method', () => {
+    const st = Style({ 'body': { 'color': '#222'
+                               , 'background': 'gray'
+                               , 'font-family': 'Comic Sans' } })
+
+    st.set('body', { 'background': 'pink', 'font-size': '75%' })
+
+    deepEqual(
+      st.rulesets(),
+      { 'body': { 'color': '#222'
+                , 'background': 'pink'
+                , 'font-family': 'Comic Sans'
+                , 'font-size': '75%' } }
+    )
+  })
+
+})
