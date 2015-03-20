@@ -1,2 +1,86 @@
 # sistyl
 Simple JSON-to-CSS style sheet library.
+
+[![NPM](https://nodei.co/npm/sistyl.png?compact=true)](https://nodei.co/npm/sistyl)
+
+## Usage
+
+```javascript
+const sistyl = require('sistyl')
+
+let st = sistyl({
+
+  '.selector': {
+    'color': '#111',
+    'background': '#333',
+
+    '.larger': { 'font-size': '125%' }
+  },
+
+  '.hidden': { 'display': 'none !important' }
+
+})
+
+// #111 on a #333 background is kind of hard to read…
+st.set('.selector', { 'color': '#eee' })
+
+st.toString()
+/* →
+ * .selector {
+ *   color: #eee;
+ *   background: #333;
+ * }
+ *
+ * .selector .larger {
+ *   font-size: 125%;
+ * }
+ *
+ * .hidden {
+ *   display: none !important;
+ * }
+ */
+```
+
+## API
+
+### let st = sistyl(rulesets={})
+
+Creates a sistyl object with an optional default bunch of rulesets.
+
+### st.set(selector, properties)
+
+Sets some CSS properties for a selector. `properties` can contain
+nested rulesets as objects. Properties are merged if the selector
+already exists.
+
+```javascript
+st.set('.selector', {
+  'background': 'pink',
+  '.nested': { 'background': 'orange' }
+})
+```
+
+### st.set(rulesets)
+
+Adds rulesets. Takes an object: keys are selectors, values are
+properties, like in `st.set(selector, properties)`.
+
+### st.toString()
+
+Returns the CSS string for this sistyl object. Rulesets are separated
+by a newline, and are indented by two spaces.
+
+```css
+.selector {
+  background: pink;
+}
+
+.selector .nested {
+  background: orange;
+}
+
+```
+
+## License
+
+MIT
