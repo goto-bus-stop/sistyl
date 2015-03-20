@@ -10,6 +10,8 @@
   { "type": "git"
   , "url" : "http://github.com/goto-bus-stop/sistyl.git"
   }
+, "dependencies":
+  { "object-assign": "2.x" }
 , "devDependencies":
   { "babel": "4.x"
   , "mocha": "2.x" }
