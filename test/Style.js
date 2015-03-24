@@ -88,6 +88,16 @@ describe('Style', () => {
     )
   })
 
+  it('treats sistyl instances as nested rulesets', () => {
+    const red = Style({ '.text': { 'color': 'red' } })
+    deepEqual(
+      Style({ '.warning': red
+            , '.error': red }).rulesets(),
+      { '.warning .text': { 'color': 'red' }
+      , '.error .text'  : { 'color': 'red' } }
+    )
+  })
+
 })
 
 describe('Mutation', () => {
