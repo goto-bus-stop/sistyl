@@ -20,7 +20,7 @@ describe('Style', () => {
     )
   })
 
-  it('rulesets are separated by two newlines', () => {
+  it('separates rulesets by two newlines', () => {
     strictEqual(
       Style({ 'a': { 'prop': 'val', 'prop2': 'val2' }
             , 'b': { 'prop3': 'val3', 'prop4': 'val4' } }).toString(),
