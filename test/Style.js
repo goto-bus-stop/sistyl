@@ -145,4 +145,15 @@ describe('Mutation', () => {
     )
   })
 
+  it('accepts sistyl instances in .set()', () => {
+    const blue = Style({ '.text': { 'color': 'blue' } })
+    deepEqual(
+      Style().set('.info', blue)
+             .set(blue)
+             .rulesets(),
+      { '.info .text': { 'color': 'blue' }
+      , '.text'  : { 'color': 'blue' } }
+    )
+  })
+
 })
