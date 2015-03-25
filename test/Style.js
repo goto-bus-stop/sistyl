@@ -88,6 +88,16 @@ describe('Style', () => {
     )
   })
 
+  it('treats sistyl instances as nested rulesets', () => {
+    const red = Style({ '.text': { 'color': 'red' } })
+    deepEqual(
+      Style({ '.warning': red
+            , '.error': red }).rulesets(),
+      { '.warning .text': { 'color': 'red' }
+      , '.error .text'  : { 'color': 'red' } }
+    )
+  })
+
 })
 
 describe('Mutation', () => {
@@ -132,6 +142,17 @@ describe('Mutation', () => {
                 , 'background': 'pink'
                 , 'font-family': 'Comic Sans'
                 , 'font-size': '75%' } }
+    )
+  })
+
+  it('accepts sistyl instances in .set()', () => {
+    const blue = Style({ '.text': { 'color': 'blue' } })
+    deepEqual(
+      Style().set('.info', blue)
+             .set(blue)
+             .rulesets(),
+      { '.info .text': { 'color': 'blue' }
+      , '.text'  : { 'color': 'blue' } }
     )
   })
 

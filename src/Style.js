@@ -29,6 +29,7 @@ assign(Style.prototype, {
   set(sel, props) {
     const rules = this._rules
     if (props) {
+      if (props instanceof Style) props = props.rulesets()
       Object.keys(props).forEach(prop => {
         const val = props[prop]
         if (typeof val === 'object') {
@@ -44,6 +45,7 @@ assign(Style.prototype, {
       })
     }
     else {
+      if (sel instanceof Style) sel = sel.rulesets()
       Object.keys(sel).forEach(selector => {
         this.set(selector, sel[selector])
       })

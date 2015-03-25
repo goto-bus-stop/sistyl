@@ -50,8 +50,8 @@ Creates a sistyl object with an optional default bunch of rulesets.
 ### st.set(selector, properties)
 
 Sets some CSS properties for a selector. `properties` can contain
-nested rulesets as objects. Properties are merged if the selector
-already exists.
+nested rulesets as objects or sistyl instances. Properties are merged
+if the selector already exists.
 
 ```javascript
 st.set('.selector', {
@@ -62,8 +62,9 @@ st.set('.selector', {
 
 ### st.set(rulesets)
 
-Adds rulesets. Takes an object: keys are selectors, values are
-properties, like in `st.set(selector, properties)`.
+Adds rulesets. Takes an object where keys are selectors and values
+are css properties, or a sistyl instance, just like in
+`st.set(selector, properties)`.
 
 ### st.toString()
 
