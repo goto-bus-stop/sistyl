@@ -45,6 +45,7 @@ assign(Style.prototype, {
       })
     }
     else {
+      if (sel instanceof Style) sel = sel.rulesets()
       Object.keys(sel).forEach(selector => {
         this.set(selector, sel[selector])
       })
