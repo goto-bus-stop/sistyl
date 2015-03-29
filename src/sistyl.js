@@ -1,8 +1,8 @@
 import assign from 'object-assign'
 
-// Style constructor, takes an optional default set of rulesets
-export default function Style(defaults) {
-  if (!(this instanceof Style)) return new Style(defaults)
+// sistyl constructor, takes an optional default set of rulesets
+export default function sistyl(defaults) {
+  if (!(this instanceof sistyl)) return new sistyl(defaults)
   this._rules = {}
 
   if (typeof defaults === 'object') {
@@ -10,7 +10,7 @@ export default function Style(defaults) {
   }
 }
 
-assign(Style.prototype, {
+assign(sistyl.prototype, {
 
   // .set() takes a selector name and an object of properties
   // and nested rulesets (passing an object as a property value)
@@ -29,7 +29,7 @@ assign(Style.prototype, {
   set(sel, props) {
     const rules = this._rules
     if (props) {
-      if (props instanceof Style) props = props.rulesets()
+      if (props instanceof sistyl) props = props.rulesets()
       Object.keys(props).forEach(prop => {
         const val = props[prop]
         if (typeof val === 'object') {
@@ -45,7 +45,7 @@ assign(Style.prototype, {
       })
     }
     else {
-      if (sel instanceof Style) sel = sel.rulesets()
+      if (sel instanceof sistyl) sel = sel.rulesets()
       Object.keys(sel).forEach(selector => {
         this.set(selector, sel[selector])
       })
@@ -54,7 +54,7 @@ assign(Style.prototype, {
     return this
   },
 
-  // returns the flattened rulesets on this Style object
+  // returns the flattened rulesets on this sistyl object
   // i.e. after
   //
   //   style.set({ '.parent': { '.child': {} } })

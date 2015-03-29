@@ -1,18 +1,18 @@
 import { strictEqual, deepEqual } from 'assert'
-import Style from '../src/Style'
+import sistyl from '../src/sistyl'
 
-describe('Style', () => {
+describe('sistyl', () => {
 
-  it('can be created with the Style constructor', () => {
+  it('can be created with the sistyl constructor', () => {
     deepEqual(
-      Style({ '.selector': { 'property': 'value' } }).rulesets(),
+      sistyl({ '.selector': { 'property': 'value' } }).rulesets(),
       { '.selector': { 'property': 'value' } }
     )
   })
 
   it('converts a JSON rulesets object into a valid CSS string', () => {
     strictEqual(
-      Style({ '.selector': { 'property': 'value' } }).toString(),
+      sistyl({ '.selector': { 'property': 'value' } }).toString(),
       '.selector {\n' +
       '  property: value;\n' +
       '}\n' +
@@ -22,8 +22,8 @@ describe('Style', () => {
 
   it('separates rulesets by two newlines', () => {
     strictEqual(
-      Style({ 'a': { 'prop': 'val', 'prop2': 'val2' }
-            , 'b': { 'prop3': 'val3', 'prop4': 'val4' } }).toString(),
+      sistyl({ 'a': { 'prop': 'val', 'prop2': 'val2' }
+             , 'b': { 'prop3': 'val3', 'prop4': 'val4' } }).toString(),
       'a {\n' +
       '  prop: val;\n' +
       '  prop2: val2;\n' +
@@ -39,7 +39,7 @@ describe('Style', () => {
 
   it('supports nested rulesets', () => {
     deepEqual(
-      Style({
+      sistyl({
         'parent': {
           'child': { 'property': 'value' }
         }
@@ -52,7 +52,7 @@ describe('Style', () => {
 
   it('supports nested rulesets next to properties', () => {
     deepEqual(
-      Style({
+      sistyl({
         '.panel': {
           'background': '#eee',
           '.header': {
@@ -69,7 +69,7 @@ describe('Style', () => {
 
   it('generates valid css for nested rulesets', () => {
     strictEqual(
-      Style({
+      sistyl({
         '.panel': {
           'background': '#eee',
           '.header': {
@@ -89,10 +89,10 @@ describe('Style', () => {
   })
 
   it('treats sistyl instances as nested rulesets', () => {
-    const red = Style({ '.text': { 'color': 'red' } })
+    const red = sistyl({ '.text': { 'color': 'red' } })
     deepEqual(
-      Style({ '.warning': red
-            , '.error': red }).rulesets(),
+      sistyl({ '.warning': red
+             , '.error': red }).rulesets(),
       { '.warning .text': { 'color': 'red' }
       , '.error .text'  : { 'color': 'red' } }
     )
@@ -103,7 +103,7 @@ describe('Style', () => {
 describe('Mutation', () => {
 
   it('supports adding rulesets through a .set() method', () => {
-    const st = Style({ 'body': { 'color': '#222' } })
+    const st = sistyl({ 'body': { 'color': '#222' } })
     deepEqual(
       st.rulesets(),
       { 'body': { 'color': '#222' } }
@@ -119,7 +119,7 @@ describe('Mutation', () => {
   })
 
   it('merges rulesets in the .set() method', () => {
-    const st = Style({ 'body': { 'color': '#222' } })
+    const st = sistyl({ 'body': { 'color': '#222' } })
     st.set('body', { 'background': '#f0f' })
 
     deepEqual(
@@ -130,9 +130,9 @@ describe('Mutation', () => {
   })
 
   it('overrides duplicate properties in the .set() method', () => {
-    const st = Style({ 'body': { 'color': '#222'
-                               , 'background': 'gray'
-                               , 'font-family': 'Comic Sans' } })
+    const st = sistyl({ 'body': { 'color': '#222'
+                                , 'background': 'gray'
+                                , 'font-family': 'Comic Sans' } })
 
     st.set('body', { 'background': 'pink', 'font-size': '75%' })
 
@@ -146,11 +146,11 @@ describe('Mutation', () => {
   })
 
   it('accepts sistyl instances in .set()', () => {
-    const blue = Style({ '.text': { 'color': 'blue' } })
+    const blue = sistyl({ '.text': { 'color': 'blue' } })
     deepEqual(
-      Style().set('.info', blue)
-             .set(blue)
-             .rulesets(),
+      sistyl().set('.info', blue)
+              .set(blue)
+              .rulesets(),
       { '.info .text': { 'color': 'blue' }
       , '.text'  : { 'color': 'blue' } }
     )

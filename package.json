@@ -1,11 +1,11 @@
 { "name": "sistyl"
 , "description": "Simple JSON-to-CSS style sheet library"
-, "version": "0.2.1"
+, "version": "0.2.2"
 , "license": "MIT"
 , "keywords": [ "style", "css" ]
 , "bugs": "https://github.com/goto-bus-stop/sistyl/issues"
 , "author": "goto-bus-stop <rene@kooi.me>"
-, "main": "lib/Style"
+, "main": "lib/sistyl"
 , "repository":
   { "type": "git"
   , "url" : "http://github.com/goto-bus-stop/sistyl.git"
@@ -18,6 +18,6 @@
   , "mocha": "2.x" }
 , "scripts":
   { "babel": "./node_modules/.bin/babel --out-dir lib src"
-  , "browser": "browserify -e src/Style.js -t babelify -o sistyl.js -s sistyl"
+  , "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl"
   , "test": "./node_modules/.bin/mocha -r babel/register" }
 }
