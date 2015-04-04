@@ -156,4 +156,14 @@ describe('Mutation', () => {
     )
   })
 
+  it('removes rulesets with .unset()', () => {
+    deepEqual(
+      sistyl({ '.blue': { 'color': 'blue' }
+             , '.pink': { 'color': 'pink' } })
+        .unset('.blue')
+        .rulesets(),
+      { '.pink': { 'color': 'pink' } }
+    )
+  })
+
 })

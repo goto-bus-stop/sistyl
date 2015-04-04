@@ -66,6 +66,13 @@ Adds rulesets. Takes an object where keys are selectors and values
 are css properties, or a sistyl instance, just like in
 `st.set(selector, properties)`.
 
+### st.unset(selector)
+
+Removes a ruleset. Takes a CSS selector, and removes the associated
+ruleset. Note that it removes *just* the given selector, and not
+other rulesets that also match the selector. Specifically,
+`.unset('.rem')` does *not* remove a `.keep, .rem` selector.
+
 ### st.toString()
 
 Returns the CSS string for this sistyl object. Rulesets are separated

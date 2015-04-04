@@ -54,6 +54,19 @@ assign(sistyl.prototype, {
     return this
   },
 
+  // .unset() removes a ruleset from the sistyl instance, that
+  // corresponds to the given selector.
+  // Note that it removes *just* the given selector, and not
+  // other rulesets that also match the selector. Specifically,
+  // .unset('.rem') does *not* remove a '.keep, .rem' selector.
+  //
+  // style.unset('.selector') // removes the `.selector {}`
+  //                          // ruleset
+  unset(selector) {
+    delete this._rules[selector]
+    return this
+  },
+
   // returns the flattened rulesets on this sistyl object
   // i.e. after
   //
