@@ -73,6 +73,11 @@ ruleset. Note that it removes *just* the given selector, and not
 other rulesets that also match the selector. Specifically,
 `.unset('.rem')` does *not* remove a `.keep, .rem` selector.
 
+### st.unset(selector, property)
+
+Removes a property from a ruleset. The same notes apply as above:
+only properties on the *exact* selector string will be removed.
+
 ### st.toString()
 
 Returns the CSS string for this sistyl object. Rulesets are separated
