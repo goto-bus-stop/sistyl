@@ -62,8 +62,15 @@ assign(sistyl.prototype, {
   //
   // style.unset('.selector') // removes the `.selector {}`
   //                          // ruleset
-  unset(selector) {
-    delete this._rules[selector]
+  // style.unset('.selector', // removes the `color` property
+  //             'color')     // from the `.selector` ruleset.
+  unset(selector, prop) {
+    if (prop !== undefined) {
+      delete this._rules[selector][prop]
+    }
+    else {
+      delete this._rules[selector]
+    }
     return this
   },
 

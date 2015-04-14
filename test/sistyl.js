@@ -156,13 +156,23 @@ describe('Mutation', () => {
     )
   })
 
-  it('removes rulesets with .unset()', () => {
+  it('removes rulesets with .unset(sel)', () => {
     deepEqual(
       sistyl({ '.blue': { 'color': 'blue' }
              , '.pink': { 'color': 'pink' } })
         .unset('.blue')
         .rulesets(),
       { '.pink': { 'color': 'pink' } }
+    )
+  })
+
+  it('removes properties with .unset(sel, prop)', () => {
+    deepEqual(
+      sistyl({ '.blue': { 'color': 'blue' } })
+        .set('.blue', { 'font-size': '10pt' })
+        .unset('.blue', 'font-size')
+        .rulesets(),
+      { '.blue': { 'color': 'blue' } }
     )
   })
 
