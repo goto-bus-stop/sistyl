@@ -15,7 +15,7 @@
   , "babelify": "6.x"
   , "mocha": "2.x" }
 , "scripts":
-  { "babel": "./node_modules/.bin/babel --out-dir lib src"
+  { "babel": "./node_modules/.bin/babel --modules umd --out-dir lib src"
   , "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl"
   , "test": "./node_modules/.bin/mocha --compilers js:babel/register" }
 }
