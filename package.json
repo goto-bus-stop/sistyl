@@ -13,8 +13,8 @@
 , "dependencies":
   { "object-assign": "2.x" }
 , "devDependencies":
-  { "babel": "4.x"
-  , "babelify": "5.x"
+  { "babel": "5.x"
+  , "babelify": "6.x"
   , "mocha": "2.x" }
 , "scripts":
   { "babel": "./node_modules/.bin/babel --out-dir lib src"
