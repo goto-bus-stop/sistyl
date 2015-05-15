@@ -1,16 +1,15 @@
-import assign from 'object-assign'
-
-// sistyl constructor, takes an optional default set of rulesets
 export default function sistyl(defaults) {
-  if (!(this instanceof sistyl)) return new sistyl(defaults)
-  this._rules = {}
-
-  if (typeof defaults === 'object') {
-    this.set(defaults)
-  }
+  return new sistyl.Sistyl(defaults)
 }
 
-assign(sistyl.prototype, {
+sistyl.Sistyl = class Sistyl {
+
+  // sistyl constructor, takes an optional default set of rulesets
+  constructor(defaults = {}) {
+    this._rules = {}
+
+    if (defaults) this.set(defaults)
+  }
 
   // .set() takes a selector name and an object of properties
   // and nested rulesets (passing an object as a property value)
@@ -29,7 +28,7 @@ assign(sistyl.prototype, {
   set(sel, props) {
     const rules = this._rules
     if (props) {
-      if (props instanceof sistyl) props = props.rulesets()
+      if (props instanceof Sistyl) props = props.rulesets()
       Object.keys(props).forEach(prop => {
         const val = props[prop]
         if (typeof val === 'object') {
@@ -45,14 +44,14 @@ assign(sistyl.prototype, {
       })
     }
     else {
-      if (sel instanceof sistyl) sel = sel.rulesets()
+      if (sel instanceof Sistyl) sel = sel.rulesets()
       Object.keys(sel).forEach(selector => {
         this.set(selector, sel[selector])
       })
     }
 
     return this
-  },
+  }
 
   // .unset() removes a ruleset from the sistyl instance, that
   // corresponds to the given selector.
@@ -72,7 +71,7 @@ assign(sistyl.prototype, {
       delete this._rules[selector]
     }
     return this
-  },
+  }
 
   // returns the flattened rulesets on this sistyl object
   // i.e. after
@@ -85,7 +84,7 @@ assign(sistyl.prototype, {
   //
   rulesets() {
     return this._rules
-  },
+  }
 
   // formats the current rulesets as a valid CSS string
   // (unless you set invalid property values, but then
@@ -104,4 +103,4 @@ assign(sistyl.prototype, {
     return str
   }
 
-})
+}
