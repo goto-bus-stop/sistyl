@@ -1,6 +1,6 @@
 { "name": "sistyl"
 , "description": "Simple JSON-to-CSS style sheet library"
-, "version": "0.4.2"
+, "version": "1.0.0"
 , "license": "MIT"
 , "keywords": [ "style", "css" ]
 , "homepage": "https://github.com/goto-bus-stop/sistyl"
