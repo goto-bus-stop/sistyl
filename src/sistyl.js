@@ -1,14 +1,5 @@
 import splitSelector from 'split-selector'
 
-function expand(base, sub) {
-  let children = splitSelector(sub)
-  return splitSelector(base).reduce((selectors, parent) => {
-    return selectors.concat(children.map(child => {
-      return `${parent} ${child}`
-    }))
-  }, []).join(', ')
-}
-
 export default function sistyl(defaults) {
   return new sistyl.Sistyl(defaults)
 }
@@ -20,6 +11,22 @@ sistyl.Sistyl = class Sistyl {
     this._rules = {}
 
     if (defaults) this.set(defaults)
+  }
+
+  // concats and regroups selectors. Deals with nested groups like
+  //
+  //   expand('#a, #b', '.x, .y')
+  //
+  // returns:
+  //
+  //   '#a .x, #a .y, #b .x, #b .y'
+  _expand(base, sub) {
+    let children = splitSelector(sub)
+    return splitSelector(base).reduce((selectors, parent) => {
+      return selectors.concat(children.map(child => {
+        return `${parent} ${child}`
+      }))
+    }, []).join(', ')
   }
 
   // .set() takes a selector name and an object of properties
@@ -44,7 +51,7 @@ sistyl.Sistyl = class Sistyl {
         const val = props[prop]
         if (typeof val === 'object') {
           // nested rules
-          this.set(expand(sel, prop), val)
+          this.set(this._expand(sel, prop), val)
         }
         else {
           if (!(sel in this._rules)) {
