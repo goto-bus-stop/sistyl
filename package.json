@@ -3,21 +3,18 @@
 , "version": "0.4.2"
 , "license": "MIT"
 , "keywords": [ "style", "css" ]
-, "bugs": "https://github.com/goto-bus-stop/sistyl/issues"
+, "repository": "goto-bus-stop/sistyl"
 , "author": "goto-bus-stop <rene@kooi.me>"
 , "main": "lib/sistyl"
-, "repository":
-  { "type": "git"
-  , "url" : "http://github.com/goto-bus-stop/sistyl.git"
-  }
 , "dependencies":
   { "split-selector": "^1.0.0" }
 , "devDependencies":
   { "babel": "5.x"
   , "babelify": "6.x"
+  , "browserify": "10.x"
   , "mocha": "2.x" }
 , "scripts":
-  { "babel": "./node_modules/.bin/babel --modules umd --out-dir lib src"
+  { "babel": "babel --modules umd --out-dir lib src"
   , "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl"
-  , "test": "./node_modules/.bin/mocha --compilers js:babel/register" }
+  , "test": "mocha --compilers js:babel/register" }
 }
