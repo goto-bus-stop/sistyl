@@ -16,5 +16,6 @@
 , "scripts":
   { "babel": "babel --modules umd --out-dir lib src"
   , "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl"
+  , "prepublish": "npm run babel"
   , "test": "mocha --compilers js:babel/register" }
 }
