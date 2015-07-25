@@ -96,4 +96,4 @@ by a newline, and are indented by two spaces.
 
 ## License
 
-MIT
+[MIT](./LICENSE)
