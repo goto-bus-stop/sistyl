@@ -10,6 +10,8 @@
   { "type": "git"
   , "url" : "http://github.com/goto-bus-stop/sistyl.git"
   }
+, "dependencies":
+  { "split-selector": "^1.0.0" }
 , "devDependencies":
   { "babel": "5.x"
   , "babelify": "6.x"

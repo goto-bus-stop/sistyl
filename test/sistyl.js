@@ -98,6 +98,37 @@ describe('sistyl', () => {
     )
   })
 
+  it('regroups nested grouped selectors', () => {
+    deepEqual(
+      sistyl({
+        '.warning, .error': {
+          '.text': { 'color': 'red' }
+        }
+      }).rulesets(),
+      { '.warning .text, .error .text': { 'color': 'red' } }
+    )
+  })
+
+  it('regroups silly/difficult-er nested grouped selectors', () => {
+    deepEqual(
+      sistyl({
+        'a.modal[title*="This, Is A \\"Title\\"."]': {
+          '.title, .message': {
+            'span': {
+              'font-size': '17pt'
+            }
+          }
+        }
+      }).rulesets(),
+      {
+        [`a.modal[title*="This, Is A \\"Title\\"."] .title span, ` +
+         `a.modal[title*="This, Is A \\"Title\\"."] .message span`]: {
+          'font-size': '17pt'
+        }
+      }
+    )
+  })
+
 })
 
 describe('Mutation', () => {
