@@ -1,21 +1,28 @@
-{ "name": "sistyl"
-, "description": "Simple JSON-to-CSS style sheet library"
-, "version": "1.0.0"
-, "license": "MIT"
-, "keywords": [ "style", "css" ]
-, "repository": "goto-bus-stop/sistyl"
-, "author": "goto-bus-stop <rene@kooi.me>"
-, "main": "lib/sistyl"
-, "dependencies":
-  { "split-selector": "^1.0.0" }
-, "devDependencies":
-  { "babel": "5.x"
-  , "babelify": "6.x"
-  , "browserify": "10.x"
-  , "mocha": "2.x" }
-, "scripts":
-  { "babel": "babel --modules umd --out-dir lib src"
-  , "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl"
-  , "prepublish": "npm run babel"
-  , "test": "mocha --compilers js:babel/register" }
+{
+  "name": "sistyl",
+  "description": "Simple JSON-to-CSS style sheet library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "keywords": [
+    "style",
+    "css"
+  ],
+  "repository": "goto-bus-stop/sistyl",
+  "author": "goto-bus-stop <rene@kooi.me>",
+  "main": "lib/sistyl",
+  "dependencies": {
+    "split-selector": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel": "6.5.2",
+    "babelify": "7.2.0",
+    "browserify": "13.0.0",
+    "mocha": "2.x"
+  },
+  "scripts": {
+    "babel": "babel --modules umd --out-dir lib src",
+    "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl",
+    "prepublish": "npm run babel",
+    "test": "mocha --compilers js:babel/register"
+  }
 }
