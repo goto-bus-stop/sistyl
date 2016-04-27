@@ -1,21 +1,52 @@
-{ "name": "sistyl"
-, "description": "Simple JSON-to-CSS style sheet library"
-, "version": "1.0.0"
-, "license": "MIT"
-, "keywords": [ "style", "css" ]
-, "repository": "goto-bus-stop/sistyl"
-, "author": "goto-bus-stop <rene@kooi.me>"
-, "main": "lib/sistyl"
-, "dependencies":
-  { "split-selector": "^1.0.0" }
-, "devDependencies":
-  { "babel": "5.x"
-  , "babelify": "6.x"
-  , "browserify": "10.x"
-  , "mocha": "2.x" }
-, "scripts":
-  { "babel": "babel --modules umd --out-dir lib src"
-  , "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl"
-  , "prepublish": "npm run babel"
-  , "test": "mocha --compilers js:babel/register" }
+{
+  "name": "sistyl",
+  "description": "Simple JSON-to-CSS style sheet library",
+  "version": "1.0.0",
+  "license": "MIT",
+  "keywords": [
+    "style",
+    "css"
+  ],
+  "repository": "goto-bus-stop/sistyl",
+  "author": "goto-bus-stop <rene@kooi.me>",
+  "main": "lib/sistyl",
+  "dependencies": {
+    "split-selector": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.7.7",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.7.7",
+    "babel-plugin-transform-es2015-block-scoping": "^6.7.1",
+    "babel-plugin-transform-es2015-classes": "^6.7.7",
+    "babel-plugin-transform-es2015-computed-properties": "^6.6.5",
+    "babel-plugin-transform-es2015-modules-umd": "^6.6.5",
+    "babel-plugin-transform-es2015-parameters": "^6.7.0",
+    "babel-plugin-transform-es2015-template-literals": "^6.6.5",
+    "babel-register": "^6.7.2",
+    "babelify": "7.2.0",
+    "browserify": "13.0.0",
+    "mocha": "2.x"
+  },
+  "babel": {
+    "plugins": [
+      "transform-es2015-arrow-functions",
+      "transform-es2015-block-scoping",
+      [
+        "transform-es2015-classes",
+        {
+          "loose": true
+        }
+      ],
+      "transform-es2015-computed-properties",
+      "transform-es2015-modules-umd",
+      "transform-es2015-parameters",
+      "transform-es2015-template-literals"
+    ]
+  },
+  "scripts": {
+    "babel": "babel --out-dir lib src",
+    "browser": "browserify -e src/sistyl.js -t babelify -o sistyl.js -s sistyl",
+    "prepublish": "npm run babel",
+    "test": "mocha --compilers js:babel-register"
+  }
 }
