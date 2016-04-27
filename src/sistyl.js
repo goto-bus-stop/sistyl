@@ -1,6 +1,8 @@
 import splitSelector from 'split-selector'
 
-export default function sistyl(defaults) {
+module.exports = sistyl
+
+function sistyl(defaults) {
   return new sistyl.Sistyl(defaults)
 }
 
