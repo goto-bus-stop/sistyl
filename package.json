@@ -14,11 +14,9 @@
     "split-selector": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^14.1.0",
     "mocha": "^3.0.2"
   },
   "scripts": {
-    "browser": "browserify -e lib/sistyl.js -o sistyl.js -s sistyl",
     "test": "mocha"
   }
 }
