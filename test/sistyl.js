@@ -1,17 +1,16 @@
-import { strictEqual, deepEqual } from 'assert'
-import sistyl from '../src/sistyl'
+var assert = require('assert')
+var sistyl = require('../')
 
 describe('sistyl', () => {
-
   it('can be created with the sistyl constructor', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({ '.selector': { 'property': 'value' } }).rulesets(),
       { '.selector': { 'property': 'value' } }
     )
   })
 
   it('converts a JSON rulesets object into a valid CSS string', () => {
-    strictEqual(
+    assert.strictEqual(
       sistyl({ '.selector': { 'property': 'value' } }).toString(),
       '.selector {\n' +
       '  property: value;\n' +
@@ -21,7 +20,7 @@ describe('sistyl', () => {
   })
 
   it('separates rulesets by two newlines', () => {
-    strictEqual(
+    assert.strictEqual(
       sistyl({ 'a': { 'prop': 'val', 'prop2': 'val2' }
              , 'b': { 'prop3': 'val3', 'prop4': 'val4' } }).toString(),
       'a {\n' +
@@ -38,7 +37,7 @@ describe('sistyl', () => {
   })
 
   it('supports nested rulesets', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({
         'parent': {
           'child': { 'property': 'value' }
@@ -51,7 +50,7 @@ describe('sistyl', () => {
   })
 
   it('supports nested rulesets next to properties', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({
         '.panel': {
           'background': '#eee',
@@ -68,7 +67,7 @@ describe('sistyl', () => {
   })
 
   it('generates valid css for nested rulesets', () => {
-    strictEqual(
+    assert.strictEqual(
       sistyl({
         '.panel': {
           'background': '#eee',
@@ -90,7 +89,7 @@ describe('sistyl', () => {
 
   it('treats sistyl instances as nested rulesets', () => {
     const red = sistyl({ '.text': { 'color': 'red' } })
-    deepEqual(
+    assert.deepEqual(
       sistyl({ '.warning': red
              , '.error': red }).rulesets(),
       { '.warning .text': { 'color': 'red' }
@@ -99,7 +98,7 @@ describe('sistyl', () => {
   })
 
   it('regroups nested grouped selectors', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({
         '.warning, .error': {
           '.text': { 'color': 'red' }
@@ -110,7 +109,7 @@ describe('sistyl', () => {
   })
 
   it('regroups silly/difficult-er nested grouped selectors', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({
         'a.modal[title*="This, Is A \\"Title\\"."]': {
           '.title, .message': {
@@ -135,14 +134,14 @@ describe('Mutation', () => {
 
   it('supports adding rulesets through a .set() method', () => {
     const st = sistyl({ 'body': { 'color': '#222' } })
-    deepEqual(
+    assert.deepEqual(
       st.rulesets(),
       { 'body': { 'color': '#222' } }
     )
 
     st.set('.warning', { 'color': '#f00' })
 
-    deepEqual(
+    assert.deepEqual(
       st.rulesets(),
       { 'body': { 'color': '#222' }
       , '.warning': { 'color': '#f00' } }
@@ -153,7 +152,7 @@ describe('Mutation', () => {
     const st = sistyl({ 'body': { 'color': '#222' } })
     st.set('body', { 'background': '#f0f' })
 
-    deepEqual(
+    assert.deepEqual(
       st.rulesets(),
       { 'body': { 'color': '#222'
                 , 'background': '#f0f' } }
@@ -167,7 +166,7 @@ describe('Mutation', () => {
 
     st.set('body', { 'background': 'pink', 'font-size': '75%' })
 
-    deepEqual(
+    assert.deepEqual(
       st.rulesets(),
       { 'body': { 'color': '#222'
                 , 'background': 'pink'
@@ -178,7 +177,7 @@ describe('Mutation', () => {
 
   it('accepts sistyl instances in .set()', () => {
     const blue = sistyl({ '.text': { 'color': 'blue' } })
-    deepEqual(
+    assert.deepEqual(
       sistyl().set('.info', blue)
               .set(blue)
               .rulesets(),
@@ -188,7 +187,7 @@ describe('Mutation', () => {
   })
 
   it('removes rulesets with .unset(sel)', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({ '.blue': { 'color': 'blue' }
              , '.pink': { 'color': 'pink' } })
         .unset('.blue')
@@ -198,7 +197,7 @@ describe('Mutation', () => {
   })
 
   it('removes properties with .unset(sel, prop)', () => {
-    deepEqual(
+    assert.deepEqual(
       sistyl({ '.blue': { 'color': 'blue' } })
         .set('.blue', { 'font-size': '10pt' })
         .unset('.blue', 'font-size')
@@ -206,5 +205,4 @@ describe('Mutation', () => {
       { '.blue': { 'color': 'blue' } }
     )
   })
-
 })
