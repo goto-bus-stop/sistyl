@@ -1,19 +1,19 @@
-import splitSelector from 'split-selector'
+const splitSelector = require('split-selector')
 
 module.exports = sistyl
 
-function sistyl(defaults) {
-  return new sistyl.Sistyl(defaults)
-}
-
-sistyl.Sistyl = class Sistyl {
-
-  // sistyl constructor, takes an optional default set of rulesets
-  constructor(defaults = {}) {
-    this._rules = {}
-
-    if (defaults) this.set(defaults)
+function sistyl (defaults) {
+  var rules = {}
+  var api = {
+    set,
+    unset,
+    rulesets,
+    toString
   }
+
+  if (defaults) set(defaults)
+
+  return api
 
   // concats and regroups selectors. Deals with nested groups like
   //
@@ -22,8 +22,8 @@ sistyl.Sistyl = class Sistyl {
   // returns:
   //
   //   '#a .x, #a .y, #b .x, #b .y'
-  _expand(base, sub) {
-    let children = splitSelector(sub)
+  function expand (base, sub) {
+    var children = splitSelector(sub)
     return splitSelector(base).reduce((selectors, parent) => {
       return selectors.concat(children.map(child => {
         return `${parent} ${child}`
@@ -45,32 +45,29 @@ sistyl.Sistyl = class Sistyl {
   //     '.selector-1': { 'css-prop': 'one' },
   //     '.selector-2': { 'css-prop': 'two' }
   //   })
-  set(sel, props) {
-    const rules = this._rules
+  function set (sel, props) {
     if (props) {
-      if (props instanceof Sistyl) props = props.rulesets()
+      if (props && typeof props.rulesets === 'function') props = props.rulesets()
       Object.keys(props).forEach(prop => {
         const val = props[prop]
         if (typeof val === 'object') {
           // nested rules
-          this.set(this._expand(sel, prop), val)
-        }
-        else {
-          if (!(sel in this._rules)) {
-            this._rules[sel] = {}
+          set(expand(sel, prop), val)
+        } else {
+          if (!(sel in rules)) {
+            rules[sel] = {}
           }
-          this._rules[sel][prop] = val
+          rules[sel][prop] = val
         }
       })
-    }
-    else {
-      if (sel instanceof Sistyl) sel = sel.rulesets()
+    } else {
+      if (sel && typeof sel.rulesets === 'function') sel = sel.rulesets()
       Object.keys(sel).forEach(selector => {
-        this.set(selector, sel[selector])
+        set(selector, sel[selector])
       })
     }
 
-    return this
+    return api
   }
 
   // .unset() removes a ruleset from the sistyl instance, that
@@ -83,14 +80,13 @@ sistyl.Sistyl = class Sistyl {
   //                          // ruleset
   // style.unset('.selector', // removes the `color` property
   //             'color')     // from the `.selector` ruleset.
-  unset(selector, prop) {
+  function unset (selector, prop) {
     if (prop !== undefined) {
-      delete this._rules[selector][prop]
+      delete rules[selector][prop]
+    } else {
+      delete rules[selector]
     }
-    else {
-      delete this._rules[selector]
-    }
-    return this
+    return api
   }
 
   // returns the flattened rulesets on this sistyl object
@@ -102,16 +98,15 @@ sistyl.Sistyl = class Sistyl {
   //
   //   { '.parent .child': {} }
   //
-  rulesets() {
-    return this._rules
+  function rulesets () {
+    return rules
   }
 
   // formats the current rulesets as a valid CSS string
   // (unless you set invalid property values, but then
   // you're to blame!)
-  toString() {
-    let str = ''
-    const rules = this._rules
+  function toString () {
+    var str = ''
     Object.keys(rules).forEach(selector => {
       const ruleset = rules[selector]
       str += `${selector} {\n`
@@ -122,5 +117,4 @@ sistyl.Sistyl = class Sistyl {
     })
     return str
   }
-
 }
